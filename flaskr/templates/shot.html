@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Pimmel</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  </head>
+  <body>
+<h1> Hallo {{username}}</h1>
+<form method="post">
+  <label for="fname">Anzahl Schlücke</label>
+  <input id="anz" name="anz" required>
+  <input type="submit" name="button" value="Saufen">
+</form>
+</body>
+</html>

@@ -1,0 +1,24 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS game;
+DROP TABLE IF EXISTS einsatz;
+
+CREATE TABLE user (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE game (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  run INTEGER
+);
+
+CREATE TABLE einsatz (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  spiel_id INTEGER,
+  anzahlEinsatz INTEGER,
+  spieler_id INTEGER,
+  FOREIGN KEY(spieler_id) REFERENCES user(id),
+  FOREIGN KEY(spiel_id) REFERENCES spiel(id)
+);
