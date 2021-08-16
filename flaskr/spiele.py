@@ -60,9 +60,11 @@ def auswerten():
     #einsaetze = db.execute('SELECT * FROM einsatz WHERE spiel_id = ?',(game['id'],)).fetchall()
     alleEinsaetze = []
     users = []
+    userName = []
     for element in db.execute('SELECT * FROM einsatz WHERE spiel_id = ?',(game['id'],)):
         alleEinsaetze.append(element[2])
         users.append(element[3])
+        userName.append(db.execute('SELECT username FROM user WHERE id = ?', (users[-1],)).fetchone()[0])
 
     '''    
     DEBUG
@@ -73,9 +75,39 @@ def auswerten():
         print("user: " + str(users[i]) + " hat gesetzt: " + str(alleEinsaetze[i]), file=sys.stdout )
     print("hier", file=sys.stdout)
     '''
-    looser_id = random.choices(users,alleEinsaetze)
-    looser_name = db.execute('SELECT * FROM user WHERE id = ?', (looser_id[0],)).fetchone()
-    return render_template('looser.html', looser=looser_name[1])
+    if session.get('user_id') == 1:
+        looser_id = random.choices(users,alleEinsaetze)
+        looser_name = db.execute('SELECT username FROM user WHERE id = ?', (looser_id[0],)).fetchone()
+        print(looser_name[0], file=sys.stdout)
+        print(game['id'], file=sys.stdout)
+        db.execute("UPDATE game SET looser = ? WHERE id = ?",(looser_name[0], game['id']))
+        db.commit()
+    else:
+        looser_name = db.execute('SELECT looser FROM game WHERE id = ?',(game['id'],)).fetchone()
+        if looser_name[0] == None:
+            return(redirect(url_for('spiele.gesetzt')))
+
+    #total number of schlücke
+    print(looser_name, file=sys.stdout)
+    print(looser_name[0], file=sys.stdout)
+    totalS = db.execute('SELECT SUM(anzahlEinsatz) FROM einsatz WHERE spiel_id = ? GROUP BY ?', (game['id'],game['id'])).fetchone()
+
+    #probabilities for every user
+    probabilityU = []
+    for i in range(len(users)):
+        probabilityU.append(
+            truncate((db.execute('SELECT anzahlEinsatz FROM einsatz WHERE spiel_id = ? AND spieler_id = ?', (game['id'],users[i])).fetchone()[0]/totalS[0]) * 100, 1)
+            )
+    return render_template('looser.html', looser=looser_name[0], len=len(users), userName=userName, alleEinsaetze=alleEinsaetze, probabilityU=probabilityU)
+
+
+def truncate(f, n):
+    '''Truncates/pads a float f to n decimal places without rounding'''
+    s = '{}'.format(f)
+    if 'e' in s or 'E' in s:
+        return '{0:.{1}f}'.format(f, n)
+    i, p, d = s.partition('.')
+    return '.'.join([i, (d+'0'*n)[:n]])
 
 
 @bp.route('/start', methods=('GET','POST'))

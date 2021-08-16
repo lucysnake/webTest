@@ -11,7 +11,8 @@ CREATE TABLE user (
 CREATE TABLE game (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT,
-  run INTEGER
+  run INTEGER,
+  looser TEXT
 );
 
 CREATE TABLE einsatz (

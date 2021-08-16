@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-{{ looser }}
+{%for i in range(0,len)%}
+  <li>{{userName[i]}}, {{alleEinsaetze[i]}}, {{probabilityU[i]}}</li>
+{%endfor%}  
+
+<h1>{{ looser }}</h1>
 </body>
 </html>
