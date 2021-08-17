@@ -10,5 +10,10 @@
 {%endfor%}  
 
 <h1>{{ looser }}</h1>
+{% if g.user['username'] == 'test' %}
+  <a href="{{url_for('spiele.neustart')}}" class="nav-link">Create new game</a>
+{% else %}
+  <a href="{{url_for('index.jo')}}" class="nav-link">Home</a>
+{% endif%}
 </body>
 </html>

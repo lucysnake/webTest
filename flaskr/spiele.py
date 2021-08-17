@@ -88,8 +88,6 @@ def auswerten():
             return(redirect(url_for('spiele.gesetzt')))
 
     #total number of schlücke
-    print(looser_name, file=sys.stdout)
-    print(looser_name[0], file=sys.stdout)
     totalS = db.execute('SELECT SUM(anzahlEinsatz) FROM einsatz WHERE spiel_id = ? GROUP BY ?', (game['id'],game['id'])).fetchone()
 
     #probabilities for every user
@@ -117,3 +115,12 @@ def startgame():
     db.execute("INSERT INTO game (name,run) VALUES(?,?)",("sauf","1"))
     db.commit()
     return(redirect(url_for('index.jo')))
+
+
+@bp.route('/neu', methods=('GET','POST'))
+def neustart():
+    db = get_db()
+    game = db.execute('SELECT * FROM game WHERE run = 1').fetchone()
+    db.execute("UPDATE game SET run = 0 WHERE run = 1")
+    db.commit()
+    return redirect(url_for('spiele.startgame'))
