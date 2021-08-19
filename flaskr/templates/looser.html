@@ -5,13 +5,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body style="background-color:lightblue;">
-{%for i in range(0,len)%}
-  <li>{{userName[i]}}, {{alleEinsaetze[i]}}, {{probabilityU[i]}}%</li>
-{%endfor%}  
-
-<h1>{{ looser }}</h1>
-<br><br><br><br>
+<body style="background-color:lightblue;"> 
+<!-- <h1>{{ looser }}</h1> -->
+<br><br><br><br><br><br><br>
 <script src="https://d3js.org/d3.v4.js"></script>
 <div id="my_dataviz"></div>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
@@ -77,7 +73,31 @@
     
     
 </script>
-<br><br><br><br>
+<div class="letter-image">
+  <div class="animated-mail">
+    <div class="back-fold"></div>
+    <div class="letter">
+      <div class="letter-border"></div>
+      <div class="letter-title"></div>
+      <div class="letter-context">{{looser}}</div>
+      <div class="letter-stamp">
+        <div class="letter-stamp-inner"></div>
+      </div>
+    </div>
+    <div class="top-fold"></div>
+    <div class="body"></div>
+    <div class="left-fold"></div>
+  </div>
+  <div class="shadow"></div>
+</div>
+
+
+{%for i in range(0,len)%}
+  <li>{{userName[i]}},&nbsp;&nbsp;&nbsp;&nbsp;{{alleEinsaetze[i]}}&nbsp;&nbsp;&nbsp;&nbsp;{{probabilityU[i]}}%</li>
+{%endfor%} 
+<br>
+<li>Insgesamte Schlücke: {{ insgesamt }}</li>
+<br><br><br>
 {% if g.user['username'] == 'test' %}
   <a href="{{url_for('spiele.neustart')}}" class="nav-link">Create new game</a>
 {% else %}

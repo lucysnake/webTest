@@ -88,19 +88,19 @@ def auswerten():
             return(redirect(url_for('spiele.gesetzt')))
 
     #total number of schlücke
-    totalS = db.execute('SELECT SUM(anzahlEinsatz) FROM einsatz WHERE spiel_id = ? GROUP BY ?', (game['id'],game['id'])).fetchone()
+    totalS = db.execute('SELECT SUM(anzahlEinsatz) FROM einsatz WHERE spiel_id = ? GROUP BY ?', (game['id'],game['id'])).fetchone()[0]
 
     dic = {}
     #probabilities for every user
     probabilityU = []
     for i in range(len(users)):
         anzahlSchluecke = db.execute('SELECT anzahlEinsatz FROM einsatz WHERE spiel_id = ? AND spieler_id = ?', (game['id'],users[i])).fetchone()[0]
-        probabilityU.append(truncate((anzahlSchluecke/totalS[0]) * 100, 1))
+        probabilityU.append(truncate((anzahlSchluecke/totalS) * 100, 1))
         #db.execute('SELECT username FROM user WHERE id = ?', (users[i],)).fetchone()[0]
         dic[db.execute('SELECT username FROM user WHERE id = ?', (users[i],)).fetchone()[0]] = anzahlSchluecke
     
     print(dic, file=sys.stdout)
-    return render_template('looser.html', looser=looser_name[0], len=len(users), userName=userName, alleEinsaetze=alleEinsaetze, probabilityU=probabilityU, dic=dic)
+    return render_template('looser.html', looser=looser_name[0], len=len(users), userName=userName, alleEinsaetze=alleEinsaetze, probabilityU=probabilityU, dic=dic, insgesamt = totalS)
 
 
 def truncate(f, n):
