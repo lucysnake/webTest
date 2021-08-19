@@ -1,22 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body style="background-color:lightblue;">
-{%for i in range(0,len)%}
-  <li>{{userName[i]}}, {{alleEinsaetze[i]}}, {{probabilityU[i]}}%</li>
-{%endfor%}  
+<meta charset="utf-8">
 
-<h1>{{ looser }}</h1>
-<br><br><br><br>
 <script src="https://d3js.org/d3.v4.js"></script>
 <div id="my_dataviz"></div>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script>
     var dict = JSON.parse('{{dic | tojson}}');
+    console.log(dict)
     // set the dimensions and margins of the graph
     var width = 450
         height = 450
@@ -77,11 +67,3 @@
     
     
 </script>
-<br><br><br><br>
-{% if g.user['username'] == 'test' %}
-  <a href="{{url_for('spiele.neustart')}}" class="nav-link">Create new game</a>
-{% else %}
-  <a href="{{url_for('index.jo')}}" class="nav-link">Home</a>
-{% endif%}
-</body>
-</html>

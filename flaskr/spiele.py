@@ -96,7 +96,13 @@ def auswerten():
         probabilityU.append(
             truncate((db.execute('SELECT anzahlEinsatz FROM einsatz WHERE spiel_id = ? AND spieler_id = ?', (game['id'],users[i])).fetchone()[0]/totalS[0]) * 100, 1)
             )
-    return render_template('looser.html', looser=looser_name[0], len=len(users), userName=userName, alleEinsaetze=alleEinsaetze, probabilityU=probabilityU)
+    
+    dic = {
+    "brand": 2,
+    "model": 3,
+    "year": 2
+    }
+    return render_template('looser.html', looser=looser_name[0], len=len(users), userName=userName, alleEinsaetze=alleEinsaetze, probabilityU=probabilityU, dic=dic)
 
 
 def truncate(f, n):

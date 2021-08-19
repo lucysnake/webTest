@@ -37,6 +37,10 @@ a {
     text-decoration: none;
 }
 
+#my_dataviz{
+    zoom: 2;
+}
+
 .header{
     border-bottom: 1px solid #E2E8F0;
 }
