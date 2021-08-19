@@ -90,18 +90,16 @@ def auswerten():
     #total number of schlücke
     totalS = db.execute('SELECT SUM(anzahlEinsatz) FROM einsatz WHERE spiel_id = ? GROUP BY ?', (game['id'],game['id'])).fetchone()
 
+    dic = {}
     #probabilities for every user
     probabilityU = []
     for i in range(len(users)):
-        probabilityU.append(
-            truncate((db.execute('SELECT anzahlEinsatz FROM einsatz WHERE spiel_id = ? AND spieler_id = ?', (game['id'],users[i])).fetchone()[0]/totalS[0]) * 100, 1)
-            )
+        anzahlSchluecke = db.execute('SELECT anzahlEinsatz FROM einsatz WHERE spiel_id = ? AND spieler_id = ?', (game['id'],users[i])).fetchone()[0]
+        probabilityU.append(truncate((anzahlSchluecke/totalS[0]) * 100, 1))
+        #db.execute('SELECT username FROM user WHERE id = ?', (users[i],)).fetchone()[0]
+        dic[db.execute('SELECT username FROM user WHERE id = ?', (users[i],)).fetchone()[0]] = anzahlSchluecke
     
-    dic = {
-    "brand": 2,
-    "model": 3,
-    "year": 2
-    }
+    print(dic, file=sys.stdout)
     return render_template('looser.html', looser=looser_name[0], len=len(users), userName=userName, alleEinsaetze=alleEinsaetze, probabilityU=probabilityU, dic=dic)
 
 
