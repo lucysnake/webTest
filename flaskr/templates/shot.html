@@ -5,12 +5,15 @@
     <title>Pimmel</title>
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
   </head>
-  <body>
-<h1> Hallo {{username}}</h1>
+  <body style="background-color:lightblue;">
+<h1 style="font-size:80px;"> Hallo {{username}}</h1>
+<br><br><br><br><br><br><br>
 <form method="post">
-  <label for="fname">Anzahl Schlücke</label>
-  <input id="anz" name="anz" required>
-  <input type="submit" name="button" value="Saufen">
+  <label for="fname" style="font-size:80px;" >Anzahl Schlücke: </label>
+  <br><br><br><br>
+  <input style="font-size:50px;" id="anz" name="anz" required>
+  <br><br><br><br>
+  <input style="font-size:50px;" type="submit" name="button" value="Saufen">
 </form>
 </body>
 </html>

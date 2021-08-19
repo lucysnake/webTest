@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body style="background-color:lightblue;">
 {%for i in range(0,len)%}
-  <li>{{userName[i]}}, {{alleEinsaetze[i]}}, {{probabilityU[i]}}</li>
+  <li>{{userName[i]}}, {{alleEinsaetze[i]}}, {{probabilityU[i]}}%</li>
 {%endfor%}  
 
 <h1>{{ looser }}</h1>

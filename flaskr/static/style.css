@@ -1,5 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400&display=swap');
 
+html, body {
+    width: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+    font-size: 3rem;
+}
+
+body {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+form {
+    display: inline-block
+}
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +26,7 @@
 }
 
 html {
-    font-size: 62.5%;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Copperplate", fantasy
 }
 
 li {
